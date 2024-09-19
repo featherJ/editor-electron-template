@@ -1,0 +1,32 @@
+{
+  "env": {
+    "node": true, 
+    "browser": true, 
+    "es2021": true 
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/recommended",
+    "plugin:import/electron",
+    "plugin:import/typescript"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "ignorePatterns": [
+    "node_modules/",
+    "dist/",
+    "build/",
+    "out/"
+  ],
+  "rules": {
+    "@typescript-eslint/no-explicit-any": "off" // 允许使用 any 类型
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "project": "./tsconfig.json"
+      }
+    }
+  }
+}
