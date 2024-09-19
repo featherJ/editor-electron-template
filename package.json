@@ -1,11 +1,11 @@
 {
     "name": "editor-electron-template",
     "version": "1.0.0",
-    "description": "Efficient light-curing 3D printing support generation software",
+    "description": "An editor template project based on electron",
     "main": "./out/main.js",
     "scripts": {
         "start": "electron .",
-        "watch": "cross-env NODE_ENV=development webpack  --watch --config ./webpack.config.ts",
+        "watch": "cross-env NODE_ENV=development webpack --watch --config ./webpack.config.ts",
         "build": "webpack --progress --config ./webpack.config.ts"
     },
     "keywords": [],
