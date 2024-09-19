@@ -1,0 +1,32 @@
+appId: "com.example.app"
+copyright: "Copyright (C) 2024-2024 My Company Name. All rights reserved"
+productName: "Editor Electron Template"
+asar: true
+buildDependenciesFromSource: false
+nodeGypRebuild: false
+npmRebuild: false
+compression: "normal"
+
+files:
+  - out/**/*
+directories:
+  output: dist
+
+mac:
+  category: "public.app-category.developer-tools"
+  type: "distribution"
+  target: "dmg"
+  icon: "build/darwin/app.icns"
+dmg:
+  background: build/darwin/background.png
+  iconSize: 80
+  window:
+    width: 500
+    height: 300
+  contents:
+    - x: 135
+      y: 190
+    - x: 370
+      y: 190
+      type: link
+      path: /Applications

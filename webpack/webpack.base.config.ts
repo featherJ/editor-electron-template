@@ -4,6 +4,7 @@ import { rules } from './webpack.rules';
 import { plugins } from './webpack.plugins';
 import TerserPlugin from 'terser-webpack-plugin';
 
+
 export const isDev = process.env.NODE_ENV === 'development';
 
 /**
