@@ -17,6 +17,7 @@ mac:
   type: "distribution"
   target: "dmg"
   icon: "build/darwin/app.icns"
+  artifactName: "${productName}-${arch}-${version}.${ext}"
 dmg:
   background: build/darwin/background.png
   iconSize: 80
@@ -30,3 +31,37 @@ dmg:
       y: 190
       type: link
       path: /Applications
+
+win:
+  icon: build/win/app.ico
+  target:
+    - nsis
+  publisherName: Egret Technology Inc
+  artifactName: "${productName}-${arch}-${version}.${ext}"
+  rfc3161TimeStampServer: http://timestamp.entrust.net/TSS/RFC3161sha1TS
+    
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: false
+  runAfterFinish: false
+  perMachine: true
+  allowElevation: true
+  installerIcon: build/win/app.ico
+  uninstallerIcon: build/win/app.ico
+  installerHeaderIcon: build/win/app.ico
+  installerSidebar: build/win/WizModernImage 100.bmp
+  uninstallerSidebar: build/win/WizModernImage 100.bmp
+  uninstallDisplayName: Egret UI Editor
+  license: build/win/zh_CN.license.txt
+  deleteAppDataOnUninstall: false
+  createDesktopShortcut: true
+  menuCategory: true
+  shortcutName: Egret UI Editor
+  displayLanguageSelector: false
+  multiLanguageInstaller: true
+  installerLanguages:
+    - zh-CN
+    - en_US
+  language: "2052"
+  unicode: true
+  include: build/win/installer.nsh
