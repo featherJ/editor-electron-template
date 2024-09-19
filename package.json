@@ -6,7 +6,6 @@
     "scripts": {
         "start": "electron .",
         "watch": "cross-env NODE_ENV=development webpack --watch --config ./webpack.config.ts",
-        "watch2":"cross-env NODE_ENV=development npx ts-node --project webpack/tsconfig.json ./node_modules/.bin/webpack --watch --config webpack.config.ts",
         "build": "webpack --progress --config ./webpack.config.ts",
         "build-mac": "electron-builder --config electron-builder.yml"
     },
@@ -45,8 +44,6 @@
         "./node_modules/@electron/remote/**"
     ],
     "dependencies": {
-        "async-require": "^1.2.2",
-        "extend": "^3.0.2",
         "uuid": "^10.0.0"
     }
 }

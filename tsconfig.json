@@ -7,7 +7,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "target": "esnext",
-    "module": "esnext",
+    "module": "CommonJS",
     "sourceMap": true,
     "outDir": "./out",
     "allowJs": true,

@@ -16,9 +16,7 @@ class Workbench {
         // importDynamically(packageName).then(({ Workbench }) => {
         //   new Workbench();
         // });
-        const time = new Date().getTime();
-        importDynamically(packageName).then(data => {
-          console.log(new Date().getTime()-time);
+        importDynamically(packageName).then((data) => {
           console.log("fuck2",data);
         });
         // const time = new Date().getTime();
