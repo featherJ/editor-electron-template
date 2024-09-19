@@ -1,17 +1,15 @@
 {
   "include": [
-    "./src/**/*",
-    "./libs/**/*"
+    "./**/*",
   ],
   "compilerOptions": {
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "target": "esnext",
-    "module": "esnext",
+    "target": "es6",
+    "module": "CommonJS",
     "sourceMap": true,
-    "outDir": "./out",
     "allowJs": true,
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "skipLibCheck": true,
     "alwaysStrict": true,
     "noImplicitAny": true,

@@ -10,23 +10,9 @@ class Workbench {
       console.log('Window loaded, loading main content...',v4().toString());
 
       setTimeout(async () => {
-        const packageName = "./workbench/workbench.esm";
-        // const x = requireDynamically(packageName)
-        // console.log("fuck1",x);
-        // importDynamically(packageName).then(({ Workbench }) => {
-        //   new Workbench();
-        // });
-        importDynamically(packageName).then((data) => {
-          console.log("fuck2",data);
+        importDynamically("./workbench/workbench.esm").then(({ Workbench }) => {
+          new Workbench();
         });
-        // const time = new Date().getTime();
-        // asyncRequire(packageName).then(data=>{
-        //   console.log(new Date().getTime()-time);
-        //   new data.Workbench();
-        //   console.log(data);
-          //module has been exported
-        // });
-
       }, 1000);
 
     });
