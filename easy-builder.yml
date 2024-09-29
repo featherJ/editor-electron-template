@@ -1,0 +1,89 @@
+appId: "com.example.app"
+copyright: "Copyright (C) 2024-2024 My Company Name. All rights reserved"
+productName: "Editor Electron Template"
+asar: true
+asarUnpack:
+  - test/test
+  - test2/test2
+buildDependenciesFromSource: false
+nodeGypRebuild: false
+npmRebuild: false
+
+files:
+  - out/**/*
+  - "!node_modules/**"   
+
+output: dist
+
+fileAssociations:
+  - ext: txt
+    name: Text Document
+    description: Text Files
+    icon: build/darwin/app.icns
+
+  - ext: md
+    name: Markdown Document
+    description: Markdown Files
+    icon: build/darwin/app.icns
+
+mac:
+  category: public.app-category.developer-tools
+  icon: build/darwin/app.icns
+  extendInfo: 
+    NSCameraUsageDescription: "We need access to your camera."  # 默认权限描述
+    NSMicrophoneUsageDescription: "We need access to your microphone."  # 默认权限描述
+  extraResources:
+    - from: build/darwin/en.lproj
+      to: en.lproj
+    - from: build/darwin/zh_CN.lproj
+      to: zh_CN.lproj
+  # sign:
+  #   identity: "Beijing Weijian Technology Company Limited (7DVKK7429H)"
+  #   entitlements: build/darwin/entitlements.plist
+  #   entitlementsInherit: build/darwin/entitlements.plist
+  # notarize:
+  #   appleId: developer@fancynode.com
+  #   appleIdPassword: idxi-vdfk-ceqn-fxss
+  pack:
+    background: build/darwin/background.png
+    iconSize: 80
+    icon: build/darwin/app.icns
+    license: build/license
+    window:
+      width: 500
+      height: 300
+    contents:
+      from:
+        x: 135
+        y: 190
+      to:
+        x: 370
+        y: 190
+        
+
+win:
+  appIcon: build/win/app.ico
+  extraResources:
+    - from: build/win/test.txt
+      to: test.txt
+  # sign:
+  #   certificateFile: build/win/certificateFile.pfx
+  #   certificatePassword: my-password
+  #   timeStampServer: http://timestamp.digicert.com
+  #   rfc3161TimeStampServer: http://timestamp.digicert.com
+  #   signingHashAlgorithms:
+  #     - sha1
+  #     - sha256
+  pack:
+    verName: Editor Electron Template
+    setupIcon: build/win/app.ico
+    appUrl: http://my-website.com
+    appId: 00000000-0000-0000-0000-000000000000
+    publisherName: My Company Inc
+    # licenseFile:
+    #   - language: chinese
+    #     file: path/license_chinese.txt
+    #   - language: english
+    #     file: path/license_english.txt
+    wizardSmallImageFile: path/wizardSmallImageFile.bmp
+    wizardImageFile: path/wizardImageFile.bmp

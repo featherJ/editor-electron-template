@@ -1,6 +1,19 @@
 import { app, BrowserWindow } from 'electron';
 import { enable } from '@electron/remote/main';
 import * as path from 'path';
+import { autoUpdateInit } from './autoUpdater';
+
+//测试使用
+// Object.defineProperty(app, 'isPackaged', {
+//   get() {
+//     return true;
+//   }
+// });
+
+// Handle creating/removing shortcuts on Windows when installing/uninstalling.
+if (require('electron-squirrel-startup')) {
+  app.quit();
+}
 
 const createWindow = (): void => {
   console.log('App is ready');
@@ -25,14 +38,20 @@ const createWindow = (): void => {
 
 };
 // app.disableHardwareAcceleration();
-app.on('ready', createWindow); 
+app.on('ready', ()=>{
+  console.log(`Electron version: ${process.versions.electron}`);
+  
+  createWindow();
+  // 版本更新初始化
+  autoUpdateInit()
+});
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
 });
-app.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
-  }
-});
+// app.on('activate', () => {
+//   if (BrowserWindow.getAllWindows().length === 0) {
+//     createWindow();
+//   }
+// });

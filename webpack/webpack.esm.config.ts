@@ -1,7 +1,8 @@
 import { glob } from 'glob';
 import type { EntryObject } from 'webpack';
 import { createBaseConfig, isDev } from './webpack.base.config';
-
+import nodeExternals from 'webpack-node-externals';
+import { builtinModules } from 'module';
 
 /**
  * 创建es模块的webpack配置
@@ -31,9 +32,15 @@ export const createEsmConfig = (output: string) => {
     config.output.environment = {
       module: true,
       dynamicImport: true
-  }
+    }
   }
   config.experiments = { outputModule: true };
+  config.externals = [
+    // nodeExternals(),
+    Object.fromEntries(
+      builtinModules.map((mod) => [mod, `commonjs ${mod}`])
+    )
+  ]
   config.module?.rules?.push({
     test: /.css$/,
     use: ['style-loader', 'css-loader']

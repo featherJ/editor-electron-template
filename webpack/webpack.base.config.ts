@@ -1,11 +1,8 @@
-import * as path from 'path';
+import path from 'path';
 import { Configuration } from 'webpack';
 import { rules } from './webpack.rules';
 import { plugins } from './webpack.plugins';
 import TerserPlugin from 'terser-webpack-plugin';
-import nodeExternals from 'webpack-node-externals';
-import { builtinModules } from 'module';
-
 
 export const isDev = process.env.NODE_ENV === 'development';
 
@@ -33,14 +30,13 @@ export const createBaseConfig = (output: string) => {
                 "node_modules"
             ],
         },
-        externals: [
-            // 排除所有node_modules
-            nodeExternals(),
-            // 排除所有node原生api
-            Object.fromEntries(
-                builtinModules.map((mod) => [mod, `commonjs ${mod}`])
-            )
-        ],
+        // externals: [
+        //     nodeExternals(),
+        //     // 排除所有node原生api
+        //     Object.fromEntries(
+        //         builtinModules.map((mod) => [mod, `commonjs ${mod}`])
+        //     )
+        // ],
         optimization: isDev ? undefined : {
             usedExports: true,
             minimize: true,

@@ -5,7 +5,7 @@
     "main": "./out/main.js",
     "scripts": {
         "start": "electron .",
-        "watch":"cross-env NODE_ENV=development npx ts-node --project webpack/tsconfig.json ./node_modules/.bin/webpack --watch --config webpack.config.ts",
+        "watch": "cross-env NODE_ENV=development npx ts-node --project webpack/tsconfig.json ./node_modules/.bin/webpack --watch --config webpack.config.ts",
         "build": "npx ts-node --project webpack/tsconfig.json ./node_modules/.bin/webpack --progress --config webpack.config.ts",
         "pack-mac": "electron-builder --mac --x64 --arm64 --config electron-builder.yml",
         "pack-win": "electron-builder --win --x64 --ia32 --config electron-builder.yml"
@@ -26,6 +26,8 @@
         "css-loader": "^6.11.0",
         "electron": "32.1.0",
         "electron-builder": "^25.0.5",
+        "electron-squirrel-startup": "^1.0.1",
+        "electron-updater": "^6.3.4",
         "eslint": "^8.57.1",
         "eslint-import-resolver-typescript": "^3.6.3",
         "eslint-plugin-import": "^2.30.0",
@@ -45,6 +47,7 @@
         "./node_modules/@electron/remote/**"
     ],
     "dependencies": {
+        "electron-log": "^5.2.0",
         "uuid": "^10.0.0"
     }
 }

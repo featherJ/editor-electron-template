@@ -9,13 +9,14 @@ compression: "normal"
 
 files:
   - out/**/*
+  - "!node_modules/**"   # 排除所有 node_modules
 directories:
   output: dist
 
 mac:
   category: "public.app-category.developer-tools"
   type: "distribution"
-  target: "dmg"
+  identity: null
   icon: "build/darwin/app.icns"
   artifactName: "${productName}-${arch}-${version}.${ext}"
 dmg:
@@ -35,10 +36,11 @@ dmg:
 win:
   icon: build/win/app.ico
   target:
-    - nsis
+    - dir
   publisherName: Egret Technology Inc
   artifactName: "${productName}-${arch}-${version}.${ext}"
-  rfc3161TimeStampServer: http://timestamp.entrust.net/TSS/RFC3161sha1TS
+  # rfc3161TimeStampServer: http://timestamp.entrust.net/TSS/RFC3161sha1TS
+    
     
 nsis:
   oneClick: false
@@ -65,3 +67,7 @@ nsis:
   language: "2052"
   unicode: true
   include: build/win/installer.nsh
+
+publish:
+  provider: generic
+  url: http://localhost:3000/
