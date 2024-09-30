@@ -80,6 +80,7 @@ win:
     appUrl: http://my-website.com
     appId: 00000000-0000-0000-0000-000000000000
     publisherName: My Company Inc
+    appUserModelID: MyCompany.Template
     # licenseFile:
     #   - language: chinese
     #     file: path/license_chinese.txt
