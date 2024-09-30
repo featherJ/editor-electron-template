@@ -85,5 +85,5 @@ win:
     #     file: path/license_chinese.txt
     #   - language: english
     #     file: path/license_english.txt
-    wizardSmallImageFile: path/wizardSmallImageFile.bmp
-    wizardImageFile: path/wizardImageFile.bmp
+    wizardSmallImageFile: build/win/WizModernSmallImage 200.bmp
+    wizardImageFile: build/win/WizModernImage 100.bmp
