@@ -5,8 +5,8 @@
     "main": "./out/main.js",
     "scripts": {
         "start": "electron .",
-        "watch": "cross-env NODE_ENV=development npx ts-node --project webpack/tsconfig.json ./node_modules/.bin/webpack --watch --config webpack.config.ts",
-        "build": "npx ts-node --project webpack/tsconfig.json ./node_modules/.bin/webpack --progress --config webpack.config.ts",
+        "watch": "cross-env NODE_ENV=development webpack --watch --config webpack.config.ts",
+        "build": "webpack --progress --config webpack.config.ts",
         "pack-mac": "electron-builder --mac --x64 --arm64 --config electron-builder.yml",
         "pack-win": "electron-builder --win --x64 --ia32 --config electron-builder.yml"
     },
