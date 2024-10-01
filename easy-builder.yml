@@ -88,3 +88,4 @@ win:
     #     file: path/license_english.txt
     wizardSmallImageFile: build/win/WizModernSmallImage 200.bmp
     wizardImageFile: build/win/WizModernImage 100.bmp
+    license: build/license #目前仅支持license.en-US.txt，utf8格式
