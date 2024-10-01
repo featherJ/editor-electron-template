@@ -84,6 +84,7 @@ win:
     appId: 00000000-0000-0000-0000-000000000000
     publisherName: My Company Inc
     appUserModelID: MyCompany.Template
+    friendlyAppName: Editor Electron Template #右键"open with"里显示的内容，没有的话使用productName
     regValueName: EditorTemplate #必须的
     wizardSmallImageFile: build/win/WizModernSmallImage 200.bmp
     wizardImageFile: build/win/WizModernImage 100.bmp
