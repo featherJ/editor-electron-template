@@ -13,12 +13,24 @@ files:
 directories:
   output: dist
 
+fileAssociations:
+  - ext: txt
+    name: Text Document
+    description: Text Files
+    icon: build/win/app.ico
+  - ext: md
+    name: Markdown Document
+    description: Markdown Files
+    icon: build/win/app.ico
+
 mac:
   category: "public.app-category.developer-tools"
   type: "distribution"
   identity: null
   icon: "build/darwin/app.icns"
   artifactName: "${productName}-${arch}-${version}.${ext}"
+  target:
+    - dir
 dmg:
   background: build/darwin/background.png
   iconSize: 80
@@ -67,6 +79,7 @@ nsis:
   language: "2052"
   unicode: true
   include: build/win/installer.nsh
+
 
 publish:
   provider: generic
