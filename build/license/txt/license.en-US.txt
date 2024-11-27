@@ -1,0 +1,17 @@
+﻿Software Installation Package User Agreement
+
+Thank you for choosing this software. This agreement is a legal contract between you (an individual or entity) and the software developer. Please read the following terms carefully before installing or using this software:
+
+1. License Usage
+This software is provided for lawful use only. You may not reverse engineer, modify, or distribute it without authorization.
+
+2. Intellectual Property
+All intellectual property rights related to this software and its contents belong to the developer. Unauthorized copying, modification, or distribution is prohibited.
+
+3. Disclaimer
+This software is provided "as is." The developer makes no express or implied warranties regarding its suitability, performance, or reliability. The developer is not liable for any issues arising from use.
+
+4. Agreement Changes
+The developer reserves the right to modify these terms at any time, with updated terms posted on the official website.
+
+By installing or using this software, you agree to all the terms of this agreement.

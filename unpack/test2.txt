@@ -1,0 +1,2 @@
+我将不会被打入到asar包内。
+I will not be included in the ASAR package.

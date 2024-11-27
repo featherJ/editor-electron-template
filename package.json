@@ -7,6 +7,7 @@
         "start": "electron .",
         "watch": "cross-env NODE_ENV=development webpack --watch --config webpack.config.ts",
         "build": "webpack --progress --config webpack.config.ts",
+        "build-mac-icon":"iconutil -c icns build/darwin/app.iconset && iconutil -c icns build/darwin/document.iconset",
         "pack-mac": "electron-builder --mac --x64 --arm64 --config electron-builder.yml",
         "pack-win": "electron-builder --win --x64 --ia32 --config electron-builder.yml"
     },
