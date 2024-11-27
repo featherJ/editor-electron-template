@@ -143,9 +143,9 @@ mac:
 
 win:
   appIcon: build/win/app.ico
-  extraResources:
-    - from: build/win/test.txt
-      to: test.txt
+  # extraResources:
+  #   - from: build/win/test.txt
+  #     to: test.txt
   # sign:
   #   certificateFile: build/win/certificateFile.pfx
   #   certificatePassword: my-password
@@ -165,4 +165,4 @@ win:
     regValueName: EditorTemplate #必须的
     wizardSmallImageFile: build/win/WizModernSmallImage 200.bmp
     wizardImageFile: build/win/WizModernImage 100.bmp
-    license: build/license #目前仅支持license.en-US.txt，utf8格式
+    license: build/license/win-rtf #目前仅支持license.en-US.txt，utf8格式
