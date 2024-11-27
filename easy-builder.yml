@@ -89,9 +89,9 @@ mac:
   # 附加资源，通常用于系统级的多语言资源。
   # Extra resources, typically used for system-level multilingual resources.
   extraResources:
-    - from: build/darwin/en.lproj
+    - from: build/darwin/resources/en.lproj
       to: en.lproj
-    - from: build/darwin/zh_CN.lproj
+    - from: build/darwin/resources/zh_CN.lproj
       to: zh_CN.lproj
   # 签名配置
   # Signing configuration.
@@ -125,7 +125,7 @@ mac:
     iconSize: 80
     # 这是 rtf 富文本协议。txt文本协议，可以切换为：build/license/txt。rtf 与 txt 请使用 utf-8 编码。
     # This is the RTF rich text version of the license agreement. To view the plain text (TXT) version, switch to: build/license/txt. Please use UTF-8 encoding for both RTF and TXT formats.
-    license: build/license/mac-rtf 
+    license: build/license/rtf-mac
     # Dmg 的窗口尺寸。
     # DMG window size.
     window:
@@ -143,9 +143,9 @@ mac:
 
 win:
   appIcon: build/win/app.ico
-  # extraResources:
-  #   - from: build/win/test.txt
-  #     to: test.txt
+  extraResources:
+    - from: build/win/resources/test.txt
+      to: test.txt
   # sign:
   #   certificateFile: build/win/certificateFile.pfx
   #   certificatePassword: my-password
@@ -163,6 +163,14 @@ win:
     appUserModelID: MyCompany.Template
     friendlyAppName: Editor Electron Template #右键"open with"里显示的内容，没有的话使用productName
     regValueName: EditorTemplate #必须的
-    wizardSmallImageFile: build/win/WizModernSmallImage 200.bmp
-    wizardImageFile: build/win/WizModernImage 100.bmp
-    license: build/license/win-rtf #目前仅支持license.en-US.txt，utf8格式
+    # 安装包中所需的小图。
+    # The small images required in the installer package.
+    # https://jrsoftware.org/ishelp/index.php?topic=setup_wizardsmallimagefile
+    wizardSmallImageFile: build/win/WizModernSmallImage*.bmp
+    # 安装包中所需的小图。
+    # The large images required in the installer package.
+    # https://jrsoftware.org/ishelp/index.php?topic=setup_wizardimagefile
+    wizardImageFile: build/win/WizModernImage*.bmp
+    # 这是 rtf 富文本协议。txt文本协议，可以切换为：build/license/txt。txt 文件可以使用 utf-8 编码，但 rtf 文件请使用对应语言的编码格式，否则会呈现乱码。
+    # This is the RTF rich text version of the license agreement. To view the plain text (TXT) version, switch to: build/license/txt. TXT files can use UTF-8 encoding, but RTF files should use the corresponding language's encoding format, otherwise they may appear garbled.
+    license: build/license/rtf-win 
