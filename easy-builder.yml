@@ -142,10 +142,9 @@ mac:
         y: 130
 
 win:
-  # todo 和mac的icon命名统一一下
   # 应用程序的图标（目前仅支持 ico 格式）
   # The application icon (currently only supports the ICO format).
-  appIcon: build/win/app.ico
+  icon: build/win/app.ico
   # 附加资源
   # Extra resources
   extraResources:
