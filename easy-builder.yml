@@ -142,26 +142,66 @@ mac:
         y: 130
 
 win:
+  # todo 和mac的icon命名统一一下
+  # 应用程序的图标（目前仅支持 ico 格式）
+  # The application icon (currently only supports the ICO format).
   appIcon: build/win/app.ico
+  # 附加资源
+  # Extra resources
   extraResources:
     - from: build/win/resources/test.txt
       to: test.txt
+  # 签名配置
+  # Signing configuration.
   # sign:
-  #   certificateFile: build/win/certificateFile.pfx
-  #   certificatePassword: my-password
-  #   timeStampServer: http://timestamp.digicert.com
-  #   rfc3161TimeStampServer: http://timestamp.digicert.com
-  #   signingHashAlgorithms:
-  #     - sha1
-  #     - sha256
+    # 证书文件的路径
+    # The path to the certificate file.
+    # certificateFile: build/win/certificateFile.pfx
+    # 证书文件的密码
+    # The password for the certificate file.
+    # certificatePassword: my-password
+    # 用于签名 sha1 的时间戳
+    # Timestamp for signing with SHA1.
+    # timeStampServer: http://timestamp.digicert.com
+    # 用于签名 sha256 的时间戳
+    # Timestamp for signing with SHA256.
+    # rfc3161TimeStampServer: http://timestamp.digicert.com
+    # 所需的签名算法
+    # The required signing algorithm.
+    # signingHashAlgorithms:
+      # - sha1
+      # - sha256
   pack:
-    verName: Editor Electron Template
+    # TODO 未来可做成支持{version}这种
+    # 应用版本名
+    # Application version name
+    # https://jrsoftware.org/ishelp/index.php?topic=setup_appvername
+    verName: Editor Electron Template 1.0
+    # 安装包的图标
+    # Installer package icon.
     setupIcon: build/win/app.ico
+    # todo 确认是否可选
+    # 应用的网址
+    # The url of application
     appUrl: http://my-website.com
-    appId: 00000000-0000-0000-0000-000000000000 #todo 看是否可以使用外层的 appId 代替
+    # todo 做成可选，如果没有设定就是用外层的appid
+    # App的id，仅用于注册表和覆盖安装时的对应等，不会在任何地方显示。
+    # App ID, used only for registry and overlay installation correspondence, and will not be displayed anywhere.
+    # https://jrsoftware.org/ishelp/index.php?topic=setup_appid
+    appId: 00000000-0000-0000-0000-000000000000 
+    # 发布者名称
+    # Publisher name.
     publisherName: My Company Inc
+    # 应用程序用户模型 ID，用于关联文件等，对应的属性为 AppUserModelIDs。
+    # Application User Model ID, used for associating files, etc. The corresponding property is AppUserModelIDs.
+    # https://learn.microsoft.com/en-us/windows/win32/shell/appids
     appUserModelID: MyCompany.Template
-    friendlyAppName: Editor Electron Template #右键"open with"里显示的内容，没有的话使用productName
+    # 右键"open with"里显示的内容，没有的话使用 productName。对应属性为 FriendlyName。
+    # The content displayed in the "Open with" right-click menu. If not specified, the productName will be used. The corresponding property is FriendlyName.
+    # https://learn.microsoft.com/en-us/dotnet/api/system.appdomain.friendlyname
+    friendlyAppName: Editor Electron Template 
+    # 注册表中被注册的文件名，用于关联文件等（不能存在空格和特殊字符）。
+    # The file name registered in the registry, used for associating files, etc. (must not contain spaces or special characters).
     regValueName: EditorTemplate #必须的
     # 安装包中所需的小图。
     # The small images required in the installer package.
