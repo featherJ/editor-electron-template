@@ -1,7 +1,8 @@
 import { app, BrowserWindow } from 'electron';
 import { enable } from '@electron/remote/main';
 import * as path from 'path';
-import { autoUpdateInit } from './autoUpdater';
+import { AppUpdater } from './updater';
+import * as fs from "fs";
 
 //测试使用
 // Object.defineProperty(app, 'isPackaged', {
@@ -9,6 +10,8 @@ import { autoUpdateInit } from './autoUpdater';
 //     return true;
 //   }
 // });
+
+const updater = new AppUpdater("/Users/apple/Documents/FacnyGit/editor-electron-template/dist/app-update.json");
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -38,13 +41,24 @@ const createWindow = (): void => {
 
 };
 // app.disableHardwareAcceleration();
-app.on('ready', ()=>{
+app.on('ready', async ()=>{
   console.log(`Electron version: ${process.versions.electron}`);
   
   createWindow();
-  // 版本更新初始化
-  autoUpdateInit()
+  // 减产版本更新
+  //todo 完善好
+  const updateInfo =await updater.checkForUpdates();
+  if(updateInfo){
+    const downloaded = await updater.downloadUpdate((loaded,total)=>{
+      console.log(loaded,total);
+    });
+    if(downloaded){
+      //TODO 安装
+    }
+  }
 });
+
+
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();

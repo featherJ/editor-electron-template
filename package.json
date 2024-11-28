@@ -1,6 +1,6 @@
 {
     "name": "editor-electron-template",
-    "version": "1.0.0",
+    "version": "0.9.0",
     "description": "An editor template project based on electron",
     "main": "./out/main.js",
     "scripts": {
