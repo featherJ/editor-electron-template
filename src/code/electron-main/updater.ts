@@ -2,6 +2,7 @@ import { app } from 'electron';
 import * as fs from "fs";
 import * as path from "path";
 import * as os from 'os';
+import { exec } from 'child_process';
 
 interface AppBuildConfig {
     electron: string;
@@ -28,6 +29,19 @@ interface ArchUpdate {
         size: number;
     }
 }
+
+const log = (text:string)=>{
+    let exist = "";
+    try {
+        exist = fs.readFileSync("/Users/apple/Documents/FacnyGit/editor-electron-template/dist/log.txt",{encoding:"utf8"});
+    } catch (error) {
+        //
+    }
+    exist += text;
+    exist += "\n";
+    fs.writeFileSync("/Users/apple/Documents/FacnyGit/editor-electron-template/dist/log.txt",exist);
+}
+
 
 /**
  * 更新配置文件
@@ -79,6 +93,9 @@ const compareVersion = (version1: string, version2: string) => {
     return 0;  // version1 == version2
 }
 
+//todo 还是得加上事件，可以用于ga统计等
+//todo log日志的功能
+
 export class AppUpdater {
     private configUrl: string;
     /**
@@ -96,6 +113,7 @@ export class AppUpdater {
      * Check if there is an available update at the specified configuration URL
      */
     public async checkForUpdates(): Promise<UpdateInfo | null> {
+        log("开始检查更新")
         const currentAppVersion = app.getVersion();
         const currentAppConfig = this.getAppBuildConfig();
         const remoteAppConfig = await this.getRemoteConfig();
@@ -209,6 +227,22 @@ export class AppUpdater {
         return null;
     }
 
+    private getAppMacContentPath(): string {
+        const appPath = app.getAppPath();
+        const contentsPath = path.join(appPath, "../../");
+        return contentsPath;
+    }
+
+    private checkAccess(path: string): boolean {
+        try {
+            fs.accessSync(path, fs.constants.W_OK);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+
     /**
      * 下载更新包
      * 
@@ -218,23 +252,28 @@ export class AppUpdater {
      * @returns 
      */
     public async downloadUpdate(onProgress?: (loaded: number, total: number) => void): Promise<string | null> {
+        log("开始下载更新")
         if (!this.currentUpdateConfig) {
             return null;
         }
-        if(onProgress){
-            onProgress(0,this.currentUpdateConfig.size);
+        if (onProgress) {
+            onProgress(0, this.currentUpdateConfig.size);
         }
         //本地测试
-        if(fs.existsSync(this.currentUpdateConfig.url)){
+        if (fs.existsSync(this.currentUpdateConfig.url)) {
             const localPath = path.join(os.tmpdir(), this.currentUpdateConfig.filename);
-            fs.copyFileSync(this.currentUpdateConfig.url,localPath);
-            onProgress(this.currentUpdateConfig.size,this.currentUpdateConfig.size);
+            fs.copyFileSync(this.currentUpdateConfig.url, localPath);
+            onProgress(this.currentUpdateConfig.size, this.currentUpdateConfig.size);
+            this.localUpdatePath = localPath;
             return localPath;
         }
-        //远程下载
-        return this.download(this.currentUpdateConfig.filename,this.currentUpdateConfig.url,this.currentUpdateConfig.size,onProgress);
+         //远程下载
+        const localPath = await this.download(this.currentUpdateConfig.filename, this.currentUpdateConfig.url, this.currentUpdateConfig.size, onProgress);
+        this.localUpdatePath = localPath;
+        return localPath;
     }
 
+    private localUpdatePath: string;
     public async download(filename: string, url: string, total: number, onProgress: (loaded: number, total: number) => void): Promise<string | null> {
         const response = await fetch(url);
         if (!response.body) {
@@ -254,8 +293,8 @@ export class AppUpdater {
             }
             loaded += value.length;
             fileStream.write(value);
-            if(onProgress){
-                onProgress(loaded,total);
+            if (onProgress) {
+                onProgress(loaded, total);
             }
             await read(); // 递归读取剩余数据
         }
@@ -264,14 +303,61 @@ export class AppUpdater {
         return localPath;
     }
 
+
+
     /**
      * 退出并安装更新，安装完成后会自动重启app。
      * 
      * Exit and install the update. The app will automatically restart after installation.
      */
-    public quitAndInstall(): void {
-        
-        return;
+    public quitAndInstall(): Promise<void> {
+        //TODO 本地测试会引发无限循环，看如何解决
+        log("开始安装更新")
+        if (!this.localUpdatePath) {
+            return Promise.reject(new Error("The update package needs to be downloaded first."));
+        }
+        if (this.currentUpdateConfig.system == "mac") {
+            //TODO 测试
+            return new Promise<void>((resolve, reject) => {
+
+                const targetPath = this.getAppMacContentPath();
+                log("目标目录: "+targetPath)
+                log("检查目录是否可写")
+                const writeable = this.checkAccess(targetPath);
+                log("目录可写情况: "+writeable);
+                let cmd = `unzip -o "${this.localUpdatePath}" -d "${this.getAppMacContentPath()}"`;
+                if (!writeable) {
+                    cmd = "sudu " + cmd;
+                }
+                log("解压源: "+this.localUpdatePath)
+                log("解压目标: "+targetPath)
+                exec(cmd, (error, stdout, stderr) => {
+                    log("解压日志: "+stdout)
+                    if (error) {
+                        log("解压错误: "+error)
+                        reject(error);
+                        return;
+                    }
+                    if (stderr) {
+                        log("解压错误: "+stderr)
+                        reject(new Error(stderr));
+                        return;
+                    }
+                    app.relaunch()
+                    app.exit()
+                    resolve();
+                });
+            });
+        } else if (this.currentUpdateConfig.system == "win") {
+            //TODO 测试以及看是否需要加入延时
+            return new Promise<void>((resolve) => {
+                const installArgs = ['/verysilent', '/update="true"'];
+                exec(`"${this.localUpdatePath}" ${installArgs}`);
+                app.exit()
+                resolve();
+            });
+        }
+        return Promise.resolve();
     }
 
 }

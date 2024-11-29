@@ -3,7 +3,9 @@ import * as fs from "fs";
 
 export class Workbench{
     constructor(){
-        document.body.append(`<div>I'm real workbench, test uuid:${v4().toString()}<div>`);
+        const p = document.createElement("p");
+        p.append(`I'm real workbench, test uuid:${v4().toString()}`)
+        document.body.appendChild(p)
         console.log(fs)
     }
 }

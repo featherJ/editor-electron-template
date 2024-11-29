@@ -2,7 +2,8 @@ import { app, BrowserWindow } from 'electron';
 import { enable } from '@electron/remote/main';
 import * as path from 'path';
 import { AppUpdater } from './updater';
-import * as fs from "fs";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require('@electron/remote/main').initialize()
 
 //测试使用
 // Object.defineProperty(app, 'isPackaged', {
@@ -41,21 +42,24 @@ const createWindow = (): void => {
 
 };
 // app.disableHardwareAcceleration();
-app.on('ready', async ()=>{
+app.on('ready', ()=>{
   console.log(`Electron version: ${process.versions.electron}`);
-  
   createWindow();
   // 减产版本更新
-  //todo 完善好
-  const updateInfo =await updater.checkForUpdates();
-  if(updateInfo){
-    const downloaded = await updater.downloadUpdate((loaded,total)=>{
-      console.log(loaded,total);
-    });
-    if(downloaded){
-      //TODO 安装
+
+  //todo 完善好弹窗示例
+  setTimeout(async () => {
+    const updateInfo =await updater.checkForUpdates();
+    if(updateInfo){
+      const downloaded = await updater.downloadUpdate((loaded,total)=>{
+        console.log(loaded,total);
+      });
+      if(downloaded){
+        await updater.quitAndInstall();
+      }
     }
-  }
+  }, 1000);
+ 
 });
 
 
