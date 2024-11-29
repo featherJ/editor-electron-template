@@ -47,7 +47,7 @@ app.on('ready', ()=>{
   createWindow();
   // 减产版本更新
 
-  //todo 完善好弹窗示例
+  //todo 完善自动更新的弹窗示例
   setTimeout(async () => {
     const updateInfo =await updater.checkForUpdates();
     if(updateInfo){
@@ -68,8 +68,9 @@ app.on('window-all-closed', () => {
     app.quit();
   }
 });
-// app.on('activate', () => {
-//   if (BrowserWindow.getAllWindows().length === 0) {
-//     createWindow();
-//   }
-// });
+
+app.on('activate', () => {
+  if (BrowserWindow.getAllWindows().length === 0) {
+    createWindow();
+  }
+});

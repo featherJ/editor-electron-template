@@ -321,44 +321,36 @@ export class AppUpdater {
             return Promise.reject(new Error("The update package needs to be downloaded first."));
         }
         if (this.currentUpdateConfig.system == "mac") {
-            //TODO 测试
             return new Promise<void>((resolve, reject) => {
 
                 const targetPath = this.getAppMacContentPath();
-                log("目标目录: "+targetPath)
-                log("检查目录是否可写")
                 const writeable = this.checkAccess(targetPath);
-                log("目录可写情况: "+writeable);
                 let cmd = `unzip -o "${this.localUpdatePath}" -d "${this.getAppMacContentPath()}"`;
                 if (!writeable) {
                     cmd = "sudu " + cmd;
                 }
-                log("解压源: "+this.localUpdatePath)
-                log("解压目标: "+targetPath)
                 exec(cmd, (error, stdout, stderr) => {
-                    log("解压日志: "+stdout)
                     if (error) {
-                        log("解压错误: "+error)
                         reject(error);
                         return;
                     }
                     if (stderr) {
-                        log("解压错误: "+stderr)
                         reject(new Error(stderr));
                         return;
                     }
                     app.relaunch()
-                    app.exit()
+                    app.quit()
                     resolve();
                 });
             });
         } else if (this.currentUpdateConfig.system == "win") {
-            //TODO 测试以及看是否需要加入延时
             return new Promise<void>((resolve) => {
                 const installArgs = ['/VERYSILENT', '/update="true"'].join(" ");
                 exec(`"${this.localUpdatePath}" ${installArgs}`);
-                app.exit()
-                resolve();
+                setTimeout(() => {
+                    app.quit()
+                    resolve();
+                }, 200);
             });
         }
         return Promise.resolve();
