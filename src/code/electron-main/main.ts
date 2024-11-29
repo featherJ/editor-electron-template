@@ -12,7 +12,7 @@ require('@electron/remote/main').initialize()
 //   }
 // });
 
-const updater = new AppUpdater("/Users/apple/Documents/FacnyGit/editor-electron-template/dist/app-update.json");
+const updater = new AppUpdater("C:\\Users\\Agua.L\\Documents\\project\\editor-electron-template\\dist\\app-update.json");
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {

@@ -33,13 +33,13 @@ interface ArchUpdate {
 const log = (text:string)=>{
     let exist = "";
     try {
-        exist = fs.readFileSync("/Users/apple/Documents/FacnyGit/editor-electron-template/dist/log.txt",{encoding:"utf8"});
+        exist = fs.readFileSync("C:\\Users\\Agua.L\\Documents\\project\\editor-electron-template\\dist\\log.txt",{encoding:"utf8"});
     } catch (error) {
         //
     }
     exist += text;
     exist += "\n";
-    fs.writeFileSync("/Users/apple/Documents/FacnyGit/editor-electron-template/dist/log.txt",exist);
+    fs.writeFileSync("C:\\Users\\Agua.L\\Documents\\project\\editor-electron-template\\dist\\log.txt",exist);
 }
 
 
@@ -150,7 +150,11 @@ export class AppUpdater {
             filename = archUpdate.minimal.filename;
             size = archUpdate.minimal.size;
         }
-        const directory = this.configUrl.substring(0, this.configUrl.lastIndexOf('/') + 1);
+        let lastIndex = this.configUrl.lastIndexOf('/');
+        if(lastIndex == -1){
+            lastIndex = this.configUrl.lastIndexOf('\\');
+        }
+        const directory = this.configUrl.substring(0, lastIndex + 1);
         const url = directory + filename;
         this.currentUpdateConfig = {
             currentVersion: currentAppVersion,
@@ -351,7 +355,7 @@ export class AppUpdater {
         } else if (this.currentUpdateConfig.system == "win") {
             //TODO 测试以及看是否需要加入延时
             return new Promise<void>((resolve) => {
-                const installArgs = ['/verysilent', '/update="true"'];
+                const installArgs = ['/VERYSILENT', '/update="true"'].join(" ");
                 exec(`"${this.localUpdatePath}" ${installArgs}`);
                 app.exit()
                 resolve();
