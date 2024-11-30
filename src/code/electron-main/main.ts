@@ -1,25 +1,17 @@
+import { enable, initialize } from '@electron/remote/main';
 import { app, BrowserWindow } from 'electron';
-import { enable } from '@electron/remote/main';
 import * as path from 'path';
 import { AppUpdater } from './updater';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require('@electron/remote/main').initialize()
 
-//测试使用
-// Object.defineProperty(app, 'isPackaged', {
-//   get() {
-//     return true;
-//   }
-// });
+initialize();
 
-const updater = new AppUpdater("C:\\Users\\Agua.L\\Documents\\project\\editor-electron-template\\dist\\app-update.json");
-
+const updater = new AppUpdater("/Users/apple/Documents/FacnyGit/editor-electron-template/dist/app-update.json");
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
-const createWindow = (): void => {
+const createWindow = () => {
   console.log('App is ready');
   process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 
@@ -39,14 +31,14 @@ const createWindow = (): void => {
     callback({ responseHeaders: details.responseHeaders });
   });
   mainWindow.loadFile(path.join(__dirname, "/workbench.html"));
-
+  return mainWindow;
 };
 // app.disableHardwareAcceleration();
 app.on('ready', ()=>{
   console.log(`Electron version: ${process.versions.electron}`);
-  createWindow();
-  // 减产版本更新
+ createWindow();
 
+  // 检查版本更新
   //todo 完善自动更新的弹窗示例
   setTimeout(async () => {
     const updateInfo =await updater.checkForUpdates();
@@ -59,7 +51,6 @@ app.on('ready', ()=>{
       }
     }
   }, 1000);
- 
 });
 
 
