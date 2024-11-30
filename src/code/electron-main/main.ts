@@ -1,15 +1,10 @@
 import { enable, initialize } from '@electron/remote/main';
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, dialog } from 'electron';
 import * as path from 'path';
 import { AppUpdater } from './updater';
+import logger from 'electron-log'
 
 initialize();
-
-const updater = new AppUpdater("/Users/apple/Documents/FacnyGit/editor-electron-template/dist/app-update.json");
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) {
-  app.quit();
-}
 
 const createWindow = () => {
   console.log('App is ready');
@@ -33,26 +28,12 @@ const createWindow = () => {
   mainWindow.loadFile(path.join(__dirname, "/workbench.html"));
   return mainWindow;
 };
-// app.disableHardwareAcceleration();
-app.on('ready', ()=>{
+
+app.on('ready', () => {
   console.log(`Electron version: ${process.versions.electron}`);
- createWindow();
-
-  // 检查版本更新
-  //todo 完善自动更新的弹窗示例
-  setTimeout(async () => {
-    const updateInfo =await updater.checkForUpdates();
-    if(updateInfo){
-      const downloaded = await updater.downloadUpdate((loaded,total)=>{
-        console.log(loaded,total);
-      });
-      if(downloaded){
-        await updater.quitAndInstall();
-      }
-    }
-  }, 1000);
+  createWindow();
+  setTimeout(() => { checkUpdate() }, 1000);
 });
-
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -65,3 +46,71 @@ app.on('activate', () => {
     createWindow();
   }
 });
+
+
+const updater = new AppUpdater("/Users/apple/Documents/FacnyGit/editor-electron-template/dist/app-update.json");
+const checkUpdate = async () => {
+  // 打印日志到本地
+  // Print logs locally
+  console.log("userData: ", app.getPath('userData'));
+
+  logger.transports.file.maxSize = 1002430 // 10M
+  logger.transports.file.format = '[{y}-{m}-{d} {h}:{i}:{s}.{ms}] [{level}]{scope} {text}'
+  logger.transports.file.resolvePathFn = () => path.join(app.getPath('userData'), 'logs/main.log')
+
+  updater.logger = logger;
+  // 添加更新监听
+  // Add updater listener
+  updater.on("checking-for-update", () => {
+    console.log("checking-for-update");
+  });
+  updater.on("update-available", info => {
+    console.log("update-available", info);
+  });
+  updater.on("update-not-available", info => {
+    console.log("update-not-available", info);
+  });
+  updater.on("download-progress", (loaded, total) => {
+    console.log(`download-progress loaded:${loaded} total:${total}`);
+  });
+  updater.on("update-downloaded", file => {
+    console.log("update-downloaded", file);
+  });
+  updater.on("error", (error, message) => {
+    console.log(`error:${error} message:${message}`);
+  });
+
+  // 检查更新
+  // Check for updates
+  const updateInfo = await updater.checkForUpdates();
+
+  if (updateInfo) {
+    let downloaded: string = null;
+    try {
+      downloaded = await updater.downloadUpdate((loaded, total) => {
+        // 可以更新界面显示下载进度
+        // Display download progress
+      });
+    } catch (error) {
+      // 下载失败
+      // Download failed
+    }
+    if (downloaded) {
+      dialog.showMessageBox({
+        title: `New Version Available`,
+        message: `The latest version v${updateInfo.remoteVersion} has been downloaded for you.`,
+        buttons: ['Install Now', 'Cancel'],
+        defaultId: 0,
+      }).then(async result => {
+        if (result.response === 0) {
+          try {
+            await updater.quitAndInstall();
+          } catch (error) {
+            // 安装失败
+            // Installation failed
+          }
+        }
+      });
+    }
+  }
+}
