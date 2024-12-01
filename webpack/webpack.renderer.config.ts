@@ -1,7 +1,6 @@
 
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { createBaseConfig, isDev } from './webpack.base.config';
-import nodeExternals from 'webpack-node-externals';
 
 /**
  * 创建渲染进程webpack配置
@@ -23,7 +22,6 @@ export const createRendererConfig = (output: string) => {
     test: /.css$/,
     use: ['style-loader', 'css-loader']
   });
-  // config.externals = [nodeExternals()]
   config.plugins?.push(new HtmlWebpackPlugin({
     template: './code/electron-browser/workbench/workbench.html', // 你的 HTML 模板文件路径
     filename: 'workbench.html', // 输出文件名

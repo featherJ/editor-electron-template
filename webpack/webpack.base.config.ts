@@ -30,13 +30,6 @@ export const createBaseConfig = (output: string) => {
                 "node_modules"
             ],
         },
-        // externals: [
-        //     nodeExternals(),
-        //     // 排除所有node原生api
-        //     Object.fromEntries(
-        //         builtinModules.map((mod) => [mod, `commonjs ${mod}`])
-        //     )
-        // ],
         optimization: isDev ? undefined : {
             usedExports: true,
             minimize: true,

@@ -48,7 +48,17 @@ app.on('activate', () => {
 });
 
 
-const updater = new AppUpdater("/Users/apple/Documents/FacnyGit/editor-electron-template/dist/app-update.json");
+// TODO 将如下 configUrl 替换为您已配置好的地址
+// TODO Replace the following configUrl with your configured address.
+
+/* 在开发过程中，支持本地路径的测试如：/Users/xxx/app-update.json 或 D:\xxx\app-update.json 
+（无论是开发环境还是发型环境请确保更新包文件与app-update.json处于同一目录下） */
+
+/* During development, support testing with local paths, e.g., /Users/xxx/app-update.json or D:\xxx\app-update.json.
+(Ensure that the update package files are in the same directory as app-update.json in both development and production environments.) */
+
+const updater = new AppUpdater("https://xxx.xxx/xxx/app-update.json");
+
 const checkUpdate = async () => {
   // 打印日志到本地
   // Print logs locally

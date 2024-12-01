@@ -1,7 +1,6 @@
 import { glob } from 'glob';
 import type { EntryObject } from 'webpack';
 import { createBaseConfig, isDev } from './webpack.base.config';
-import nodeExternals from 'webpack-node-externals';
 import { builtinModules } from 'module';
 
 /**
@@ -36,7 +35,6 @@ export const createEsmConfig = (output: string) => {
   }
   config.experiments = { outputModule: true };
   config.externals = [
-    // nodeExternals(),
     Object.fromEntries(
       builtinModules.map((mod) => [mod, `commonjs ${mod}`])
     )
