@@ -1,4 +1,4 @@
-# Electron Easy Updater
+# Editor Electron Template
 中文文档 | [English](README.md)
 
 这是一个 Electron 的模板项目，使用 [electron-easy-builder](https://github.com/featherJ/electron-easy-builder) 作为打包工具，使用 [electron-easy-updater](https://github.com/featherJ/electron-easy-updater) 作为更新器。
