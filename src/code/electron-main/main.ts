@@ -1,8 +1,8 @@
 import { enable, initialize } from '@electron/remote/main';
 import { app, BrowserWindow, dialog } from 'electron';
+import { AppUpdater } from "electron-easy-upd8r";
+import logger from 'electron-log';
 import * as path from 'path';
-import { AppUpdater } from './updater';
-import logger from 'electron-log'
 
 initialize();
 
@@ -15,7 +15,8 @@ const createWindow = () => {
     width: 800,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false
+      contextIsolation: false,
+      preload: path.join(__dirname, '/preload.js')  
     },
   });
   enable(mainWindow.webContents);
