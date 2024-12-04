@@ -1,7 +1,7 @@
 {
     "name": "editor-electron-template",
     "version": "1.0.0",
-    "description": "An editor template project based on electron",
+    "description": "This is an Electron template project, using electron-easy-builder as the packaging tool and electron-easy-updater as the updater.",
     "main": "./out/main.js",
     "scripts": {
         "start": "electron .",
