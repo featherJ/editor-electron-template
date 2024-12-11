@@ -25,3 +25,6 @@
 ```
 const updater = new AppUpdater("https://xxx.xxx/xxx/app-update.json");
 ```
+### 编译打包
+* 在 `macOS` 上通过 `npm run package-mac` 编译打包。
+* 在 `Windows` 上通过 `npm run package-win` 编译打包。

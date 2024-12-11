@@ -23,3 +23,10 @@ File `src/code/electron-main/main.ts`:
 ```
 const updater = new AppUpdater("https://xxx.xxx/xxx/app-update.json");
 ```
+### Compile and Package
+* Use `npm run package-mac` to compile and package on `macOS`.
+* Use `npm run package-win` to compile and package on `Windows`.
+
+
+
+
